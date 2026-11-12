@@ -1,0 +1,13 @@
+const assert=require('node:assert/strict');const m=require('./app.js');
+assert.equal(m.COMPETITIONS.length,24);
+assert.equal(m.parseDate('12/11/2026'),'2026-11-12');
+assert.equal(m.parseDate('2026-11-12'),'2026-11-12');
+assert.equal(m.csv('date,home,away\n2026-11-12,"Manchester, City",Arsenal')[0].home,'Manchester, City');
+assert.equal(m.csv('a,b\n"line\nnew",2')[0].a,'line\nnew');
+assert.equal(m.fileMatch('data/ENG_1_premier-league/fixtures_2627.csv',m.COMPETITIONS[8]),true);
+assert.equal(m.fileMatch('data/ENG_1_premier-league/fixtures_2627.csv',m.COMPETITIONS[9]),false);
+assert.equal(m.candidateFiles(['data/ENG_1_premier-league/fixtures_2627.csv'],m.COMPETITIONS[8],'2026-11-12').length,1);
+assert.equal(m.matchRow({date:'2026-11-12',home:'A',away:'B'},'X','fixture').hg,null);
+assert.ok(Math.abs(m.poisson(2,0)-Math.exp(-2))<1e-8);
+assert.equal(m.teamStats('A',[{home:'A',away:'B',date:'2026-11-01',hg:2,ag:1}]).scored,2);
+console.log('11 testów jednostkowych: OK');
